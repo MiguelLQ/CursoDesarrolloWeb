@@ -36,8 +36,12 @@ namespace Ecomerce.backend.Controllers
                 {
                     return BadRequest();
                 }
-                var result = await _service.AddAsync(nuevaCategoria);
-                return CreatedAtAction(nameof(GetCategoria), new { id = nuevaCategoria.Id }, nuevaCategoria);
+                var response = await _service.AddAsync(nuevaCategoria);
+                if (!response.Success)
+                {
+                    return BadRequest(new { message = response.Message });
+                }
+                return CreatedAtAction(nameof(GetCategoria), new { id = response.Result!.Id }, response.Result);
             }
 
             [HttpPut("{id}")]
@@ -47,9 +51,13 @@ namespace Ecomerce.backend.Controllers
                 {
                     return BadRequest("El ID de la categoría no coincide.");
                 }
-                await _service.UpdateAsync(categoriaActualizada);
-                return NoContent();
-            }
+                var response = await _service.UpdateAsync(categoriaActualizada);
+                if (!response.Success)
+                {
+                    return BadRequest(new { message = response.Message });
+                }
+                return CreatedAtAction(nameof(GetCategoria), new { id = response.Result!.Id }, response.Result);
+        }
 
             [HttpDelete("{id}")]
             public async Task<ActionResult> EliminarCategoria(int id)
