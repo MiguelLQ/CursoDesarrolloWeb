@@ -7,14 +7,32 @@
     </div>
 </div>
 
-<MudNavMenu>
-    <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.Home">Inicio</MudNavLink>
-    <MudDivider />
-    <MudNavLink Href="/Categorias" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Category">Categorias</MudNavLink>
-    <MudDivider />
-    <MudNavLink Href="/productos" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.ProductionQuantityLimits">Productos</MudNavLink>
-
-</MudNavMenu>
+﻿﻿<AuthorizeView Roles="Administrador">
+    <Authorized>
+        <MudNavMenu>
+            <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.Home">Home</MudNavLink>
+            <MudDivider />
+            <MudNavLink Href="/usuarios" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person2">Usuarios</MudNavLink>
+            <MudDivider />
+            <MudNavLink Href="/productos" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.ProductionQuantityLimits">Productos</MudNavLink>
+            <MudDivider />
+            <MudNavLink Href="/categorias" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Category">Categorias</MudNavLink>
+            <MudDivider />
+            <MudNavLink Href="/dashboard" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Dashboard">Dashboard</MudNavLink>
+            <MudDivider />
+            <MudNavLink Href="/ventas" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.ShoppingBag">Pedidos</MudNavLink>
+        </MudNavMenu>
+    </Authorized>
+</AuthorizeView>
+<AuthorizeView Roles="Usuario">
+    <Authorized>
+        <MudNavMenu>
+            <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.Home">Inicio</MudNavLink>
+            <MudDivider />
+            <MudNavLink Href="/pedidos" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.ShoppingBag">Mis Pedidos</MudNavLink>
+        </MudNavMenu>
+    </Authorized>
+</AuthorizeView>
 
 @code {
     private bool collapseNavMenu = true;

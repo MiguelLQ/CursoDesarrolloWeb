@@ -18,12 +18,13 @@ builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=LocalConnec
 //services capa de negocios
 builder.Services.AddScoped<CategoriaService>();
 builder.Services.AddScoped<ProductoService>();
+builder.Services.AddScoped<UsuarioService>();
 builder.Services.AddScoped<IFilesService, FilesService>();
 
 //repositories capa de acceso a datos
 builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddScoped<IProductoRepository, ProductoRepository>();
-
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 //registrar el servicio de swagger
 builder.Services.AddSwaggerGen();
 
