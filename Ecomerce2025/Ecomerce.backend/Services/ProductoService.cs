@@ -78,5 +78,9 @@ namespace Ecomerce.backend.Services
         {
             await _repository.DeleteAsync(id);
         }
+        public async Task<(IEnumerable<Producto> Productos, int TotalCount)> GetPaginatedAsync(int page, int pageSize)
+        {
+            return await _repository.GetPaginatedAsync(page, pageSize);
+        }
     }
 }

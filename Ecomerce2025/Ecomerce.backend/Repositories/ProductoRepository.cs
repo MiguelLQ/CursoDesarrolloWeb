@@ -67,5 +67,16 @@ namespace Ecomerce.backend.Repositories
                 .FirstOrDefaultAsync(c => c.Id == id) ?? throw new Exception($"Categoria con id {id} no fue encontrada.");
             return categoria;
         }
+        public async Task<(IEnumerable<Producto> Productos, int TotalCount)> GetPaginatedAsync(int page, int pageSize)
+        {
+            var totalCount = await _context.Productos.CountAsync();
+            var productos = await _context.Productos
+                .Include(p => p.Categoria)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (productos, totalCount);
+        }
     }
 }

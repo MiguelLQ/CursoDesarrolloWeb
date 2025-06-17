@@ -10,5 +10,6 @@ namespace Ecomerce.backend.Repositories
         Task UpdateAsync(Producto producto);
         Task DeleteAsync(int id);
         Task<Categoria?> GetCategoriaByIdAsync(int id); // Add this method to resolve the error  
+        Task<(IEnumerable<Producto> Productos, int TotalCount)> GetPaginatedAsync(int page, int pageSize);
     }
 }

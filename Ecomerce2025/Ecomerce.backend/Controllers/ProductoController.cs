@@ -1,5 +1,6 @@
 ﻿using Ecomerce.backend.Services;
 using Ecomerce.share.Entities;
+using Ecomerce.share.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -66,6 +67,24 @@ namespace Ecomerce.backend.Controllers
             }
             await _service.DeleteAsync(id);
             return NoContent();
+        }
+        [HttpGet("paginated")]
+        public async Task<IActionResult> GetPaginated([FromQuery] int page = 1, [FromQuery] int pageSize = 9)
+        {
+            if (page <= 0 || pageSize <= 0)
+            {
+                return BadRequest("Los parámetros 'page' y 'pageSize' deben ser mayores a 0.");
+            }
+
+            var (productos, totalCount) = await _service.GetPaginatedAsync(page, pageSize);
+
+            var response = new PaginationResponse<Producto>
+            {
+                Items = [.. productos],
+                TotalCount = totalCount
+            };
+
+            return Ok(response);
         }
     }
 }
